@@ -75,15 +75,17 @@ namespace Code.Controllers
             {
                 if (Input.GetTouch(i).phase == TouchPhase.Moved)
                 {
-                    RaycastHit hit;
-                    Ray ray = Camera.main.ScreenPointToRay(Input.GetTouch(i).position);
-                    if (Physics.Raycast(ray, out hit))
+                    if (Camera.main is { })
                     {
-                        _offset = hit.transform.position - hit.point;
-                        _distance = hit.distance;
-                    }
+                        Ray ray = Camera.main.ScreenPointToRay(Input.GetTouch(i).position);
+                        if (Physics.Raycast(ray, out var hit))
+                        {
+                            _offset = hit.transform.position - hit.point;
+                            _distance = hit.distance;
+                        }
 
-                    _trail.transform.position = ray.origin + ray.direction * _distance + _offset;
+                        _trail.transform.position = ray.origin + ray.direction * _distance + _offset;
+                    }
                 }
             }
         }

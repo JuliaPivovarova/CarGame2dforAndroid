@@ -5,10 +5,10 @@ namespace Code.Views
 {
     public class InputTaps: BaseInputView
     {
-        Vector3 direction = Vector3.zero;
-        Vector3 offset = Vector3.zero;
-        float distance = 0f;
-        Vector3 tapPosition;
+        private Vector3 _direction = Vector3.zero;
+        private Vector3 _offset = Vector3.zero;
+        private float _distance = 0f;
+        private Vector3 _tapPosition;
         
         public override void Init(SubscribeProperty<float> leftMove, SubscribeProperty<float> rightMove, float speed)
         {
@@ -22,26 +22,29 @@ namespace Code.Views
             {
                 if (Input.GetTouch(i).phase == TouchPhase.Began)
                 {
-                    RaycastHit hit;
-                    Ray ray = Camera.main.ScreenPointToRay(Input.GetTouch(i).position);
-                    if (Physics.Raycast(ray, out hit))
+                    if (Camera.main is { })
                     {
-                        offset = hit.transform.position - hit.point;
-                        distance = hit.distance;
+                        Ray ray = Camera.main.ScreenPointToRay(Input.GetTouch(i).position);
+                        if (Physics.Raycast(ray, out var hit))
+                        {
+                            _offset = hit.transform.position - hit.point;
+                            _distance = hit.distance;
+                        }
+
+                        _tapPosition = ray.origin + ray.direction * _distance + _offset;
                     }
 
-                    tapPosition = ray.origin + ray.direction * distance + offset;
-                    direction.x = tapPosition.x;
-                    direction.z = tapPosition.z;
+                    _direction.x = _tapPosition.x;
+                    _direction.z = _tapPosition.z;
                 }
             }
             
-            if (direction.sqrMagnitude > 1)
+            if (_direction.sqrMagnitude > 1)
             {
-                direction.Normalize();
+                _direction.Normalize();
             }
             
-            OnRightMove(direction.sqrMagnitude / 20 * _speed);
+            OnRightMove(_direction.sqrMagnitude / 20 * Speed);
         }
 
         private void OnDestroy()

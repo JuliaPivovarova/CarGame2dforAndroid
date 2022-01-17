@@ -1,4 +1,5 @@
 ﻿using System.Collections.Generic;
+using Code.Ability;
 using Code.Inventory;
 using Code.Items;
 using Code.Model;
@@ -13,20 +14,24 @@ namespace Code.Controllers
         private InventoryController _inventoryController;
         private readonly Transform _placeForUI;
         private readonly Transform _placeForVideo;
-        private readonly Transform _inventory;
+        private readonly Transform _placeForInventory;
         private readonly ProfilePlayer _profilePlayer;
         private readonly List<ItemConfig> _itemConfigs;
         private UpgrateItemConfigDataSource _itemConfigDataSource;
         private InventoryView _inventoryView;
+        private readonly List<AbilityItemConfig> _abilityItemConfigs;
+        private readonly Transform _placeForAbilities;
+        private AbilityController _abilityController;
 
-        public MainController(Transform placeForUI, Transform placeForVideo, ProfilePlayer profilePlayer, List<ItemConfig> itemConfigs, Transform inventory, UpgrateItemConfigDataSource itemConfigDataSource)
+        public MainController(Transform placeForUI, Transform placeForVideo, ProfilePlayer profilePlayer, List<ItemConfig> itemConfigs, UpgrateItemConfigDataSource itemConfigDataSource, List<AbilityItemConfig> abilityItemConfigs, Transform placeForAbilities, Transform placeForInventory)
         {
             _placeForUI = placeForUI;
             _placeForVideo = placeForVideo;
             _profilePlayer = profilePlayer;
-            _inventory = inventory;
-            _inventoryView = inventory.GetComponent<InventoryView>();
+            _placeForInventory = placeForInventory;
             _itemConfigDataSource = itemConfigDataSource;
+            _abilityItemConfigs = abilityItemConfigs;
+            _placeForAbilities = placeForAbilities;
             _itemConfigs = itemConfigs;
             OnChangeGameState(_profilePlayer.CurrentState.Value);
             _profilePlayer.CurrentState.SubscribeOnChange(OnChangeGameState);
@@ -41,11 +46,7 @@ namespace Code.Controllers
                     _gameController?.Dispose();
                     break;
                 case GameState.Game:
-                    _inventoryController = new InventoryController(_itemConfigs, _itemConfigDataSource, _inventoryView);
-                    _inventoryController.ShowInventory();
-                    _inventory.gameObject.SetActive(true);
-                    
-                    _gameController = new GameController(_profilePlayer);
+                    _gameController = new GameController(_profilePlayer, _itemConfigs, _itemConfigDataSource, _abilityItemConfigs, _placeForAbilities, _placeForInventory);
                     _mainMenuController?.Dispose();
                     break;
                 default:

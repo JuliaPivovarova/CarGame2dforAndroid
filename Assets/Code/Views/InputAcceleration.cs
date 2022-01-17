@@ -22,7 +22,7 @@ namespace Code.Views
                 direction.Normalize();
             }
             
-            OnRightMove(direction.sqrMagnitude / 20 * _speed);
+            OnRightMove(direction.sqrMagnitude / 20 * Speed);
         }
 
         private void OnDestroy()
