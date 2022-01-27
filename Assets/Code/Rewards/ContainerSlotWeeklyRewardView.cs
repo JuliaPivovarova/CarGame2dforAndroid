@@ -17,18 +17,17 @@ namespace Code.Rewards
 
         public void SetData(Reward firstReward, Reward secondReward, bool isSingle, int countWeek, bool isSelect)
         {
+            _iconFirstCurrency.gameObject.SetActive(!isSingle);
+            _iconSecondCurrency.gameObject.SetActive(!isSingle);
+            _countFirstReward.gameObject.SetActive(!isSingle);
+            _countSecondReward.gameObject.SetActive(!isSingle);
+            
+            _iconSingleCurrency.gameObject.SetActive(isSingle);
+            _countSingleReward.gameObject.SetActive(isSingle);
             if (isSingle)
             {
                 _iconSingleCurrency.sprite = firstReward.IconCurrency;
                 _countSingleReward.text = firstReward.CountCurrency.ToString();
-                
-                _iconFirstCurrency.gameObject.SetActive(false);
-                _iconSecondCurrency.gameObject.SetActive(false);
-                _countFirstReward.gameObject.SetActive(false);
-                _countSecondReward.gameObject.SetActive(false);
-                
-                _iconSingleCurrency.gameObject.SetActive(true);
-                _countSingleReward.gameObject.SetActive(true);
             }
             else
             {
@@ -36,14 +35,6 @@ namespace Code.Rewards
                 _countFirstReward.text = firstReward.CountCurrency.ToString();
                 _iconSecondCurrency.sprite = secondReward.IconCurrency;
                 _countSecondReward.text = secondReward.CountCurrency.ToString();
-                
-                _iconFirstCurrency.gameObject.SetActive(true);
-                _iconSecondCurrency.gameObject.SetActive(true);
-                _countFirstReward.gameObject.SetActive(true);
-                _countSecondReward.gameObject.SetActive(true);
-                
-                _iconSingleCurrency.gameObject.SetActive(false);
-                _countSingleReward.gameObject.SetActive(false);
             }
             
             _textDays.text = $"Week {countWeek}";

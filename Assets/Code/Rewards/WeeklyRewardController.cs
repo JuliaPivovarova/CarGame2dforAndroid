@@ -17,8 +17,7 @@ namespace Code.Rewards
         {
             _weeklyRewardView = weeklyRewardView;
             _canvasWeeklyRewardWindow = weeklyRewardView.gameObject.GetComponent<Canvas>();
-            _weeklyRewardView.TimerSlider.maxValue = 0f;
-            _weeklyRewardView.TimerSlider.minValue = _weeklyRewardView.TimeCooldown;
+            //_weeklyRewardView.TimerSlider.value = (float)(current)
         }
 
         public void RefreshWeeklyView()
@@ -108,7 +107,9 @@ namespace Code.Rewards
                     var timeGetReward =
                         $"{currentClaimCooldown.Days:D2} : {currentClaimCooldown.Hours:D2} : {currentClaimCooldown.Minutes:D2} : {currentClaimCooldown.Seconds:D2}";
                     _weeklyRewardView.TimerNewReward.text = timeGetReward;
-                    _weeklyRewardView.TimerSlider.value = _weeklyRewardView.TimerSlider.value - 1f;
+                    _weeklyRewardView.TimerSlider.value =
+                        (float)(currentClaimCooldown.Seconds /
+                                _weeklyRewardView.TimeCooldown); //_weeklyRewardView.TimerSlider.value - 1f;
                 }
             }
 

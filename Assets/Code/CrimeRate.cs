@@ -21,20 +21,25 @@ namespace Code
             {
                 if (_countCrimeRate != value)
                 {
-                    if (_countCrimeRate < _minCountCrimeRate)
-                    {
-                        Debug.Log("Crime Rate can't be lower");
-                    }
-                    else if(_countCrimeRate > _maxCountCrimeRate)
-                    {
-                        Debug.Log("Crime Rate can't be higher");
-                    }
-                    else
-                    {
-                        _countCrimeRate = value;
-                        Notifier(DataType.CrimeRate);
-                    }
+                    CountCrimeRateInBorders(value);
                 }
+            }
+        }
+
+        private void CountCrimeRateInBorders(int value)
+        {
+            if (_countCrimeRate < _minCountCrimeRate)
+            {
+                Debug.Log("Crime Rate can't be lower");
+            }
+            else if(_countCrimeRate > _maxCountCrimeRate)
+            {
+                Debug.Log("Crime Rate can't be higher");
+            }
+            else
+            {
+                _countCrimeRate = value;
+                Notifier(DataType.CrimeRate);
             }
         }
     }
