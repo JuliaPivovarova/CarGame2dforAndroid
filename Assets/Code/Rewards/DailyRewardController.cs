@@ -12,13 +12,13 @@ namespace Code.Rewards
         private List<ContainerSlotRewardView> _slots = new List<ContainerSlotRewardView>();
         private bool _isGetReward;
         private Canvas _canvasWeeklyRewardWindow;
+        private Canvas _canvasDailyRewardWindow;
 
         public DailyRewardController(DailyRewardView dailyRewardView, Transform weeklyRewardsWindow)
         {
             _dailyRewardView = dailyRewardView;
             _canvasWeeklyRewardWindow = weeklyRewardsWindow.gameObject.GetComponent<Canvas>();
-            _dailyRewardView.TimerSlider.maxValue = 0f;
-            _dailyRewardView.TimerSlider.minValue = _dailyRewardView.TimeCooldown;
+            _canvasDailyRewardWindow = dailyRewardView.gameObject.GetComponent<Canvas>();
         }
 
         public void RefreshDailyView()
@@ -39,6 +39,12 @@ namespace Code.Rewards
             _dailyRewardView.GetRewardButton.onClick.AddListener(ClaimReward);
             _dailyRewardView.ResetButton.onClick.AddListener(ResetTimer);
             _dailyRewardView.GoToWeeklyRewardsButton.onClick.AddListener(GoToWeeklyRewardsWindow);
+            _dailyRewardView.GoBackToFight.onClick.AddListener(GoBackToFight);
+        }
+
+        private void GoBackToFight()
+        {
+            _canvasDailyRewardWindow.sortingOrder = -2;
         }
 
         private void GoToWeeklyRewardsWindow()
@@ -105,7 +111,9 @@ namespace Code.Rewards
                     var timeGetReward =
                         $"{currentClaimCooldown.Days:D2} : {currentClaimCooldown.Hours:D2} : {currentClaimCooldown.Minutes:D2} : {currentClaimCooldown.Seconds:D2}";
                     _dailyRewardView.TimerNewReward.text = timeGetReward;
-                    _dailyRewardView.TimerSlider.value = _dailyRewardView.TimerSlider.value - 1f;
+                    _dailyRewardView.TimerSlider.value =
+                        (float)(currentClaimCooldown.Seconds /
+                                _dailyRewardView.TimeCooldown); //_dailyRewardView.TimerSlider.value - 1f;
                 }
             }
 

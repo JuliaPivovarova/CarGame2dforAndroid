@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using Code.Tweens;
 using TMPro;
 using UnityEngine;
 using UnityEngine.UI;
@@ -24,7 +25,7 @@ namespace Code.Rewards
 
         [SerializeField] private Transform _mountRootSlotsReward;
         [SerializeField] private ContainerSlotWeeklyRewardView _containerSlotWeeklyRewardView;
-        [SerializeField] private Button _getRewardButton;
+        [SerializeField] private CustomButton _getRewardButton;
         [SerializeField] private Button _resetButton;
         [SerializeField] private Button _goBackButton;
         [SerializeField] private Slider _timerSlider;

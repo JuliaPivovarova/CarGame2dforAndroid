@@ -1,18 +1,17 @@
 ﻿using System;
-using System.Collections;
 using UnityEngine;
 
 namespace Code.Rewards
 {
-    public class BaseRewardController
+    public abstract class BaseRewardController
     {
-        protected virtual void RefreshView() { }
+        protected abstract void RefreshView();
 
-        protected virtual void SubscribesButtons() { }
-        
-        protected virtual void ClaimReward(){}
+        protected abstract void SubscribesButtons();
 
-        protected virtual void InitSlots() { }
+        protected abstract void ClaimReward();
+
+        protected abstract void InitSlots();
         
         private protected void RefreshRewardsState(IBaseRewardView baseRewardView, ref bool isGetReward)
         {
@@ -55,6 +54,6 @@ namespace Code.Rewards
             CurrencyView.Instance.ResetCurrency(RewardType.Diamond);
         }
 
-        protected virtual void RefreshUI() { }
+        protected abstract void RefreshUI();
     }
 }

@@ -1,5 +1,8 @@
-﻿using TMPro;
+﻿using Code.Rewards;
+using Code.Tweens;
+using TMPro;
 using UnityEngine;
+using DG.Tweening;
 using UnityEngine.UI;
 
 namespace Code
@@ -23,6 +26,8 @@ namespace Code
 
         [SerializeField] private Button goWithoutFightButton;
         [SerializeField] private Button fightButton;
+        [SerializeField] private CustomButton goToRewards;
+        [SerializeField] private DailyRewardView _dailyRewardView;
         [SerializeField] private int minCountCrimeRate = 0;
         [SerializeField] private int maxCountCrimeRate = 5;
         [SerializeField] private int countCrimeRateWithoutFight = 2;
@@ -31,6 +36,8 @@ namespace Code
         private int _allCountHealthPlayer;
         private int _allCountPowerPlayer;
         private int _allCountCrimeRatePlayer;
+
+        private Canvas _canvasDailyRewardWindow;
 
         private Money _money;
         private Health _health;
@@ -67,6 +74,14 @@ namespace Code
             goWithoutFightButton.gameObject.SetActive(true);
             goWithoutFightButton.onClick.AddListener(GoWithoutFight);
             fightButton.onClick.AddListener(Fight);
+
+            _canvasDailyRewardWindow = _dailyRewardView.gameObject.GetComponent<Canvas>();
+            goToRewards.onClick.AddListener(GoToDailyRewardsWindow);
+        }
+
+        private void GoToDailyRewardsWindow()
+        {
+            _canvasDailyRewardWindow.sortingOrder = 1;
         }
 
         private void Fight()
@@ -90,6 +105,7 @@ namespace Code
             
             goWithoutFightButton.onClick.RemoveAllListeners();
             fightButton.onClick.RemoveAllListeners();
+            goToRewards.onClick.RemoveAllListeners();
             
             _money.Detach(_enemy);
             _health.Detach(_enemy);

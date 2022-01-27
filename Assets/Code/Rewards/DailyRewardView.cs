@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using Code.Tweens;
 using TMPro;
 using UnityEngine;
 using UnityEngine.UI;
@@ -24,9 +25,10 @@ namespace Code.Rewards
 
         [SerializeField] private Transform _mountRootSlotsReward;
         [SerializeField] private ContainerSlotRewardView _containerSlotRewardView;
-        [SerializeField] private Button _getRewardButton;
+        [SerializeField] private CustomButton _getRewardButton;
         [SerializeField] private Button _resetButton;
         [SerializeField] private Button _goToWeeklyRewardsButton;
+        [SerializeField] private Button _goBackToFight;
         [SerializeField] private Slider _timerSlider;
 
         public float TimeCooldown => _timeCooldown;
@@ -38,6 +40,7 @@ namespace Code.Rewards
         public Button GetRewardButton => _getRewardButton;
         public Button ResetButton => _resetButton;
         public Button GoToWeeklyRewardsButton => _goToWeeklyRewardsButton;
+        public Button GoBackToFight => _goBackToFight;
         public Slider TimerSlider => _timerSlider;
 
         public int CurrentSlotingActive
